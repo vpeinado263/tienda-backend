@@ -1,6 +1,6 @@
 import session from 'express-session';
 import connectMongoDBSession from 'connect-mongodb-session';
-import detenv from 'dotenv'
+import detenv from 'dotenv';
 
 detenv.config();
 
