@@ -6,7 +6,7 @@ import productRoute from './routes/productRoute/ProductRoute';
 import userRoute from './routes/user/UserRoute'; 
 import sessionRoutes from './routes/sessionRoute/SessionRoute'; 
 import appRoute from './routes/app/AppRoute'; 
-import cors from 'cors';
+
 
 const app = express();
 
@@ -15,10 +15,6 @@ app.use(sessionConfig);
 connectDB();
 
 app.use(express.json());
-app.use(cors({
-  origin: 'http://localhost:3000', 
-  optionsSuccessStatus: 200
-}));
 
 app.use(appRoute);
 

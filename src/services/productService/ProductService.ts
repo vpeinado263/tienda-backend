@@ -1,7 +1,6 @@
 import {  ProductModel, Product  } from '../../models/productModel/ProductModel';
 
 function isValidUrl(url: string): boolean {
-  // Expresión regular para validar URLs
   const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
   return urlRegex.test(url);
 }
@@ -12,13 +11,8 @@ class ProductService {
     try {
       const products = await ProductModel.find().lean();
   
-      // Verificar la URL de la imagen en cada producto
       products.forEach(product => {
         if (product.imageUrl && typeof product.imageUrl === 'string' && isValidUrl(product.imageUrl)) {
-          // console.log('La URL de la imagen es válida para el producto:', product);
-        } else {
-          // console.error('La URL de la imagen no es válida para el producto:', product);
-          // Puedes lanzar un error, registrar un mensaje de advertencia, o realizar alguna otra acción dependiendo de tus necesidades
         }
       });      
   
@@ -90,9 +84,6 @@ async getProductCount(): Promise<number> {
 
 async searchProducts(searchTerm: string): Promise<Product[]> {
   try {
-    // Aquí implementa la lógica para buscar productos basados en el término de búsqueda
-    // Puedes utilizar tu lógica de búsqueda existente o implementar una nueva aquí
-    // Por ejemplo:
     const products = await ProductModel.find({ name: { $regex: searchTerm, $options: 'i' } }).lean();
     return products;
   } catch (error) {
