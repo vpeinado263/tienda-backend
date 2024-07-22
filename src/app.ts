@@ -1,5 +1,4 @@
 import express from 'express';
-import errorHandler from '../src/middlewares/errorHandler'; 
 import { sessionConfig } from './settings/SessionConfig';
 import connectDB from './scripts/initDB'; 
 import productRoute from './routes/productRoute/ProductRoute'; 
@@ -23,7 +22,5 @@ app.use('/api/products', productRoute);
 app.use('/api/users', userRoute);
 
 app.use('/api/session', sessionRoutes);
-
-app.use(errorHandler);
 
 export default app;

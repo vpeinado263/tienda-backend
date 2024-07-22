@@ -11,7 +11,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const ProductModel_1 = require("../../models/productModel/ProductModel");
 function isValidUrl(url) {
-    // Expresión regular para validar URLs
     const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
     return urlRegex.test(url);
 }
@@ -20,14 +19,8 @@ class ProductService {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const products = yield ProductModel_1.ProductModel.find().lean();
-                // Verificar la URL de la imagen en cada producto
                 products.forEach(product => {
                     if (product.imageUrl && typeof product.imageUrl === 'string' && isValidUrl(product.imageUrl)) {
-                        // console.log('La URL de la imagen es válida para el producto:', product);
-                    }
-                    else {
-                        // console.error('La URL de la imagen no es válida para el producto:', product);
-                        // Puedes lanzar un error, registrar un mensaje de advertencia, o realizar alguna otra acción dependiendo de tus necesidades
                     }
                 });
                 return products;
@@ -102,9 +95,6 @@ class ProductService {
     searchProducts(searchTerm) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                // Aquí implementa la lógica para buscar productos basados en el término de búsqueda
-                // Puedes utilizar tu lógica de búsqueda existente o implementar una nueva aquí
-                // Por ejemplo:
                 const products = yield ProductModel_1.ProductModel.find({ name: { $regex: searchTerm, $options: 'i' } }).lean();
                 return products;
             }
