@@ -1,9 +1,7 @@
 services:
   - type: web
-    name: backend
+    name: my-backend-service
     env: node
-    buildCommand: 'npm install'
-    startCommand: 'npm start'
     plan: free
-    branch: main
-    rootDirectory: backend
+    buildCommand: npm run build
+    startCommand: node dist/index.js
