@@ -1,0 +1,18 @@
+# Exported from Render on 2024-07-22T03:58:08Z
+services:
+- type: web
+  name: mi-back-end
+  runtime: node
+  repo: https://github.com/vpeinado263/mi-back-end
+  plan: free
+  envVars:
+  - key: SECRET_KEY
+    sync: false
+  - key: PORT
+    sync: false
+  - key: MONGO_URL
+    sync: false
+  region: oregon
+  buildCommand: npm install
+  startCommand: node dist/index.js
+version: "1"
