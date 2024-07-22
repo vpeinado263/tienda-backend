@@ -12,12 +12,11 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": false,
-    "noEmit": false,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "types": ["express"],
-    "jsx": "react"
+    "jsx": "react"  // Remove if not using React
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules"]  // Remove "dist" if it is needed
 }
