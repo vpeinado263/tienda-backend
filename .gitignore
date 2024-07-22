@@ -1,0 +1,17 @@
+/node_modules
+
+/dist
+
+/coverage
+
+/.env
+
+Front-end/build/
+Front-end/node_modules/
+
+.vscode/
+
+jest.setup.js
+jest.teardown.js
+
+
