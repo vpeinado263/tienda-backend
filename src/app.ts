@@ -24,7 +24,7 @@ app.use(express.json());
 
 app.use(appRoute);
 
-app.use('/api/products', productRoute);
+app.use('/products', productRoute);
 
 app.use('/api/users', userRoute);
 
