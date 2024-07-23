@@ -12,6 +12,8 @@ const app = express();
 
 app.use(cors({
     origin: 'https://tienda-x--swart.vercel.app',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type']
 }));
 
 app.use(sessionConfig);
