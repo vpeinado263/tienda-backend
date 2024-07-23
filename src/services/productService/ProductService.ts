@@ -10,12 +10,6 @@ class ProductService {
   async getAllProducts(): Promise<Product[]> {
     try {
       const products = await ProductModel.find().lean();
-  
-      products.forEach(product => {
-        if (product.imageUrl && typeof product.imageUrl === 'string' && isValidUrl(product.imageUrl)) {
-        }
-      });      
-  
       return products;
     } catch (error) {
       console.error('Error al obtener los productos:', error);
