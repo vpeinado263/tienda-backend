@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import { sessionConfig } from './settings/SessionConfig';
 import connectDB from './scripts/initDB'; 
 import productRoute from './routes/productRoute/ProductRoute'; 
@@ -8,6 +9,10 @@ import appRoute from './routes/app/AppRoute';
 
 
 const app = express();
+
+app.use(cors({
+    origin: 'https://tienda-x--swart.vercel.app',
+}));
 
 app.use(sessionConfig);
 
