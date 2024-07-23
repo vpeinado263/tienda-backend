@@ -11,7 +11,7 @@ import appRoute from './routes/app/AppRoute';
 const app = express();
 
 app.use(cors({
-    origin: 'https://tienda-x--swart.vercel.app',
+    origin: 'https://tienda-x-72hf0t03n-vhp-projects-694c293c.vercel.app/',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type']
 }));
@@ -26,8 +26,8 @@ app.use(appRoute);
 
 app.use('/products', productRoute);
 
-app.use('/api/users', userRoute);
+app.use('/users', userRoute);
 
-app.use('/api/session', sessionRoutes);
+app.use('/session', sessionRoutes);
 
 export default app;
