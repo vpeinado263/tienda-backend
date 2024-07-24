@@ -19,10 +19,6 @@ class ProductService {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const products = yield ProductModel_1.ProductModel.find().lean();
-                products.forEach(product => {
-                    if (product.imageUrl && typeof product.imageUrl === 'string' && isValidUrl(product.imageUrl)) {
-                    }
-                });
                 return products;
             }
             catch (error) {
