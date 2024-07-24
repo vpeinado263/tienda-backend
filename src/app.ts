@@ -7,11 +7,7 @@ import appRoute from './routes/app/AppRoute'; // Importa la ruta centralizada
 const app = express();
 
 // Configuración de CORS
-app.use(cors({
-    origin: 'https://tienda-x--swart.vercel.app', // Dominio de frontend en producción
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type']
-}));
+app.use(cors);
 
 // Configuración de sesiones
 app.use(sessionConfig);
