@@ -8,7 +8,7 @@ const app = express();
 
 // Configuración de CORS
 app.use(cors({
-    origin: 'https://tienda-x--swart.vercel.app',
+    origin: 'https://tienda-x--swart.vercel.app', // Dominio de frontend en producción
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type']
 }));
