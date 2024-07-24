@@ -2,32 +2,27 @@ import express from 'express';
 import cors from 'cors';
 import { sessionConfig } from './settings/SessionConfig';
 import connectDB from './scripts/initDB'; 
-import productRoute from './routes/productRoute/ProductRoute'; 
-import userRoute from './routes/user/UserRoute'; 
-import sessionRoutes from './routes/sessionRoute/SessionRoute'; 
-import appRoute from './routes/app/AppRoute'; 
-
+import appRoute from './routes/app/AppRoute'; // Importa la ruta centralizada
 
 const app = express();
 
+// Configuración de CORS
 app.use(cors({
-    origin: 'https://tienda-x-72hf0t03n-vhp-projects-694c293c.vercel.app/',
+    origin: 'https://tienda-x--swart.vercel.app',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type']
 }));
 
+// Configuración de sesiones
 app.use(sessionConfig);
 
+// Conexión a la base de datos
 connectDB();
 
+// Middleware para parsear JSON
 app.use(express.json());
 
-app.use(appRoute);
-
-app.use('/products', productRoute);
-
-app.use('/users', userRoute);
-
-app.use('/session', sessionRoutes);
+// Usar las rutas definidas en appRoute
+app.use('/api', appRoute); // Prefijo /api para todas las rutas
 
 export default app;
