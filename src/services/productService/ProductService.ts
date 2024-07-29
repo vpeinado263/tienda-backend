@@ -13,14 +13,18 @@ class ProductService {
       throw new Error('Error al obtener los productos.');
     }
   }
-  
+ 
   async createProduct(productData: Partial<Product>): Promise<Product> {
+    // Validación de URLs
+    if (productData.imageUrls) {
+      productData.imageUrls.forEach(url => {
+        if (url && !isValidUrl(url)) {
+          throw new Error('Una o más URLs de imagen no son válidas.');
+        }
+      });
+    }
+
     try {
-      // Validar URLs en productData.imageUrls si existen
-      if (productData.imageUrls && productData.imageUrls.some(url => !isValidUrl(url))) {
-        throw new Error('Una o más URLs de imagen no son válidas.');
-      }
-      
       const newProduct = await ProductModel.create(productData);
       return newProduct;
     } catch (error) {
