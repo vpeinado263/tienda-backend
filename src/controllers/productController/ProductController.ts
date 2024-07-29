@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import ProductService from '../../services/productService/ProductService';
 
-//controlador para obtner todos los productos
+//controlador para obtener todos los productos
 const getAllProducts = async (req: Request, res: Response) => {
   try {
     const products = await ProductService.getAllProducts();
@@ -35,7 +35,6 @@ const createProduct = async (req: Request, res: Response) => {
 //controlador para eliminar un producto segun el ID
 const deleteProductById = async (req: Request, res: Response) => {
   const { id } = req.params;
-
   try {
     const deletedProduct = await ProductService.deleteProductById(id);
 

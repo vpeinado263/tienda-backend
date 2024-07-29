@@ -1,13 +1,6 @@
 /node_modules
-
-/coverage
-
 /.env
-
-Front-end/build/
-Front-end/node_modules/
-
-.vscode/
+/.dist
 
 
 

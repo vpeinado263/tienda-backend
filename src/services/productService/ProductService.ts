@@ -15,7 +15,6 @@ class ProductService {
   }
  
   async createProduct(productData: Partial<Product>): Promise<Product> {
-    // Validación de URLs
     if (productData.imageUrls) {
       productData.imageUrls.forEach(url => {
         if (url && !isValidUrl(url)) {
