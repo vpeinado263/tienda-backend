@@ -35,8 +35,8 @@ const getProductCount = (req, res) => __awaiter(void 0, void 0, void 0, function
 });
 const createProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { _id, name, description, price, imageUrl, quantity } = req.body;
-        const newProduct = yield ProductService_1.default.createProduct({ _id, name, description, price, imageUrl, quantity });
+        const { _id, name, description, price, imageUrls, quantity } = req.body; // Asegúrate de que el nombre del campo sea 'imageUrls'
+        const newProduct = yield ProductService_1.default.createProduct({ _id, name, description, price, imageUrls, quantity });
         res.status(201).json({ success: true, data: newProduct });
     }
     catch (error) {
@@ -46,9 +46,9 @@ const createProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 });
 const updateProductById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const { _id, name, description, price, imageUrl, quantity } = req.body;
+    const { _id, name, description, price, imageUrls, quantity } = req.body; // Asegúrate de que el nombre del campo sea 'imageUrls'
     try {
-        const updatedProduct = yield ProductService_1.default.updateProductById(id, { _id, name, description, price, imageUrl, quantity });
+        const updatedProduct = yield ProductService_1.default.updateProductById(id, { _id, name, description, price, imageUrls, quantity });
         if (!updatedProduct) {
             return res.status(404).json({ success: false, error: 'Producto no encontrado' });
         }

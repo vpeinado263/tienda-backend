@@ -10,10 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const ProductModel_1 = require("../../models/productModel/ProductModel");
-function isValidUrl(url) {
-    const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
-    return urlRegex.test(url);
-}
+const validators_1 = require("../../utils/validators");
 class ProductService {
     getAllProducts() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -29,6 +26,14 @@ class ProductService {
     }
     createProduct(productData) {
         return __awaiter(this, void 0, void 0, function* () {
+            // Validación de URLs
+            if (productData.imageUrls) {
+                productData.imageUrls.forEach(url => {
+                    if (url && !(0, validators_1.isValidUrl)(url)) {
+                        throw new Error('Una o más URLs de imagen no son válidas.');
+                    }
+                });
+            }
             try {
                 const newProduct = yield ProductModel_1.ProductModel.create(productData);
                 return newProduct;
@@ -38,6 +43,7 @@ class ProductService {
             }
         });
     }
+    // Actualizar un producto por ID
     updateProductById(_id, productData) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -45,20 +51,35 @@ class ProductService {
                 if (!existingProduct) {
                     return null;
                 }
+                // Actualizar los campos del producto si se proporcionan
                 if (productData.name) {
                     existingProduct.name = productData.name;
                 }
                 if (productData.description) {
                     existingProduct.description = productData.description;
                 }
+                if (productData.price) {
+                    existingProduct.price = productData.price;
+                }
+                if (productData.imageUrls) {
+                    // Validar URLs en productData.imageUrls
+                    if (productData.imageUrls.some(url => !(0, validators_1.isValidUrl)(url))) {
+                        throw new Error('Una o más URLs de imagen no son válidas.');
+                    }
+                    existingProduct.imageUrls = productData.imageUrls;
+                }
+                if (productData.quantity) {
+                    existingProduct.quantity = productData.quantity;
+                }
                 const updatedProduct = yield existingProduct.save();
                 return updatedProduct;
             }
             catch (error) {
-                throw new Error('Error updating product by ID.');
+                throw new Error('Error al actualizar el producto por ID.');
             }
         });
     }
+    // Eliminar un producto por ID
     deleteProductById(productId) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -71,11 +92,12 @@ class ProductService {
                 return { success: true, deletedProduct };
             }
             catch (error) {
-                console.error('Error deleting product:', error.message);
-                throw new Error('Error deleting product: ' + error.message);
+                console.error('Error al eliminar el producto:', error.message);
+                throw new Error('Error al eliminar el producto: ' + error.message);
             }
         });
     }
+    // Obtener la cantidad total de productos
     getProductCount() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -88,6 +110,7 @@ class ProductService {
             }
         });
     }
+    // Buscar productos por término de búsqueda
     searchProducts(searchTerm) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -101,5 +124,4 @@ class ProductService {
         });
     }
 }
-;
 exports.default = new ProductService();

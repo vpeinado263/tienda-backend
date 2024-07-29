@@ -32,41 +32,6 @@ class ProductService {
     }
   }
 
-  // Actualizar un producto por ID
-  async updateProductById(_id: string, productData: Partial<Product>): Promise<Product | null> {
-    try {
-      const existingProduct = await ProductModel.findById(_id);
-      if (!existingProduct) {
-        return null;
-      }
-
-      // Actualizar los campos del producto si se proporcionan
-      if (productData.name) {
-        existingProduct.name = productData.name;
-      }
-      if (productData.description) {
-        existingProduct.description = productData.description;
-      }
-      if (productData.price) {
-        existingProduct.price = productData.price;
-      }
-      if (productData.imageUrls) {
-        // Validar URLs en productData.imageUrls
-        if (productData.imageUrls.some(url => !isValidUrl(url))) {
-          throw new Error('Una o más URLs de imagen no son válidas.');
-        }
-        existingProduct.imageUrls = productData.imageUrls;
-      }
-      if (productData.quantity) {
-        existingProduct.quantity = productData.quantity;
-      }
-
-      const updatedProduct = await existingProduct.save();
-      return updatedProduct;
-    } catch (error) {
-      throw new Error('Error al actualizar el producto por ID.');
-    }
-  }
 
   // Eliminar un producto por ID
   async deleteProductById(productId: string): Promise<{ success: boolean; deletedProduct?: Product } | void> {
@@ -94,17 +59,6 @@ class ProductService {
     } catch (error) {
       console.error('Error al obtener la cantidad de productos:', error);
       throw error;
-    }
-  }
-
-  // Buscar productos por término de búsqueda
-  async searchProducts(searchTerm: string): Promise<Product[]> {
-    try {
-      const products = await ProductModel.find({ name: { $regex: searchTerm, $options: 'i' } }).lean();
-      return products;
-    } catch (error) {
-      console.error('Error al buscar productos:', error);
-      throw new Error('Error al buscar productos.');
     }
   }
 

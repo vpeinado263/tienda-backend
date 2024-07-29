@@ -5,7 +5,7 @@ export interface Product extends Document {
   name: string;
   description: string;
   price: number;  
-  imageUrls: string[],
+  imageUrls: string[];
   quantity: number; 
 }
 
