@@ -23,8 +23,8 @@ const getProductCount = async (req: Request, res: Response) => {
 
 const createProduct = async (req: Request, res: Response) => {
   try {
-    const { _id, name, description, price, imageUrl, quantity } = req.body;
-    const newProduct = await ProductService.createProduct({ _id, name, description, price, imageUrl, quantity });
+    const { _id, name, description, price, imageUrls, quantity } = req.body; // Asegúrate de que el nombre del campo sea 'imageUrls'
+    const newProduct = await ProductService.createProduct({ _id, name, description, price, imageUrls, quantity });
     res.status(201).json({ success: true, data: newProduct });
   } catch (error: any) {
     console.error('Error al crear el producto', error.message);
@@ -34,10 +34,10 @@ const createProduct = async (req: Request, res: Response) => {
 
 const updateProductById = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { _id, name, description, price, imageUrl, quantity } = req.body;
+  const { _id, name, description, price, imageUrls, quantity } = req.body; // Asegúrate de que el nombre del campo sea 'imageUrls'
 
   try {
-    const updatedProduct = await ProductService.updateProductById(id, { _id, name, description, price, imageUrl, quantity });
+    const updatedProduct = await ProductService.updateProductById(id, { _id, name, description, price, imageUrls, quantity });
 
     if (!updatedProduct) {
       return res.status(404).json({ success: false, error: 'Producto no encontrado' });
