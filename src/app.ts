@@ -7,7 +7,6 @@ import connectDB from './scripts/initDB';
 import productRoute from './routes/productRoute/ProductRoute';
 import uploadRoute from './routes/uploadRoute/uploadRoute';
 
-
 const app = express();
 
 app.use(sessionConfig);
@@ -20,15 +19,29 @@ app.use(cors({
   allowedHeaders: ['Content-Type']
 }));
 
-// Ruta para subir imágenes
+app.use(express.json()); 
+app.use(express.urlencoded({ extended: true })); 
+
 app.post('/api/upload', upload.single('file'), async (req, res) => {
   try {
     const file = req.file;
     if (!file) {
       return res.status(400).send('No file uploaded.');
     }
-
-    const result = await cloudinary.uploader.upload(file.path);
+    const result = await new Promise<any>((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        { resource_type: 'auto' },
+        (error, result) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(result);
+          }
+        }
+      );
+      const bufferStream = require('stream').Readable.from(file.buffer);
+      bufferStream.pipe(uploadStream);
+    });
     res.json({ url: result.secure_url });
   } catch (error) {
     console.error('Error uploading image:', error);
@@ -37,10 +50,6 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
 });
 
 app.use('/api/products', productRoute);
+app.use('/api', uploadRoute);
 
-app.use('/api', uploadRoute); 
-
-export default app; // Exportación predeterminada de la aplicación
-
-
-
+export default app;
