@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import connectDB from './scripts/initDB';
-import appRoute from './routes/app/AppRoute';
+import AppRoute from './routes/app/AppRoute';
 
 const app = express();
 
@@ -16,6 +16,6 @@ app.use(cors({
   allowedHeaders: ['Content-Type']
 }));
 
-app.use('/api', appRoute);
+app.use('/api', AppRoute);
 
 export default app;
