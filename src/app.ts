@@ -19,8 +19,7 @@ connectDB();
 
 app.use(express.json());
 
-app.use('/api/upload', uploadRoute);  // Asegúrate de que la ruta esté correctamente configurada
-
+app.use('/api', uploadRoute); 
 app.use('/api/products', productRoute);
 
 export default app;
