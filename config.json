@@ -1,0 +1,12 @@
+[1mdiff --git a/render.yaml b/render.yaml[m
+[1mindex 867228f..69870ac 100644[m
+[1m--- a/render.yaml[m
+[1m+++ b/render.yaml[m
+[36m@@ -12,6 +12,6 @@[m [mservices:[m
+   - key: MONGO_URL[m
+     sync: false[m
+   region: oregon[m
+[31m-  buildCommand: npm install[m
+[32m+[m[32m  buildCommand: npm install && tsc[m
+   startCommand: node dist/index.js[m
+ version: "1"[m

@@ -12,6 +12,6 @@ services:
   - key: MONGO_URL
     sync: false
   region: oregon
-  buildCommand: npm install
+  buildCommand: npm install && tsc
   startCommand: node dist/index.js
 version: "1"

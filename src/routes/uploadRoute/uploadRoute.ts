@@ -1,7 +1,6 @@
-// src/routes/uploadRoute/uploadRoute.ts
 import { Router } from 'express';
 import multer from 'multer';
-import cloudinary from '../../config/cloudinaryconfig'; 
+import cloudinary from '../../config/cloudinaryconfig';
 
 const uploadRoute = Router();
 
