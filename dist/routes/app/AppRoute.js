@@ -5,8 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const ProductRoute_1 = __importDefault(require("../productRoute/ProductRoute"));
-const UserRoute_1 = __importDefault(require("../user/UserRoute"));
-const appRoute = (0, express_1.Router)();
-appRoute.use('/api/products', ProductRoute_1.default);
-appRoute.use('/api/users', UserRoute_1.default);
-exports.default = appRoute;
+const uploadRoute_1 = __importDefault(require("../uploadRoute/uploadRoute"));
+const router = (0, express_1.Router)();
+console.log('Router instance created successfully.');
+router.use('/products', ProductRoute_1.default);
+router.use('/upload', uploadRoute_1.default);
+exports.default = router;

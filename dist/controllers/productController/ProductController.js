@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const ProductService_1 = __importDefault(require("../../services/productService/ProductService"));
+//controlador para obtener todos los productos
 const getAllProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const products = yield ProductService_1.default.getAllProducts();
@@ -23,6 +24,7 @@ const getAllProducts = (req, res) => __awaiter(void 0, void 0, void 0, function*
         res.status(500).json({ success: false, error: 'Error al obtener los productos' });
     }
 });
+//controlador para contabilizar la cantidad de productos
 const getProductCount = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const count = yield ProductService_1.default.getProductCount();
@@ -33,9 +35,10 @@ const getProductCount = (req, res) => __awaiter(void 0, void 0, void 0, function
         res.status(500).json({ error: 'Error interno del servidor' });
     }
 });
+//controlaor para crear un producto
 const createProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { _id, name, description, price, imageUrls, quantity } = req.body; // Asegúrate de que el nombre del campo sea 'imageUrls'
+        const { _id, name, description, price, imageUrls, quantity } = req.body;
         const newProduct = yield ProductService_1.default.createProduct({ _id, name, description, price, imageUrls, quantity });
         res.status(201).json({ success: true, data: newProduct });
     }
@@ -44,21 +47,7 @@ const createProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.status(422).json({ success: false, error: 'Error al crear el producto' });
     }
 });
-const updateProductById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
-    const { _id, name, description, price, imageUrls, quantity } = req.body; // Asegúrate de que el nombre del campo sea 'imageUrls'
-    try {
-        const updatedProduct = yield ProductService_1.default.updateProductById(id, { _id, name, description, price, imageUrls, quantity });
-        if (!updatedProduct) {
-            return res.status(404).json({ success: false, error: 'Producto no encontrado' });
-        }
-        res.json({ success: true, data: updatedProduct });
-    }
-    catch (error) {
-        console.error('Error al actualizar el producto:', error.message);
-        res.status(422).json({ success: false, error: 'Error al actualizar el producto' });
-    }
-});
+//controlador para eliminar un producto segun el ID
 const deleteProductById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
@@ -76,7 +65,6 @@ const deleteProductById = (req, res) => __awaiter(void 0, void 0, void 0, functi
 exports.default = {
     getAllProducts,
     createProduct,
-    updateProductById,
     deleteProductById,
     getProductCount
 };

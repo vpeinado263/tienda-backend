@@ -9,7 +9,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 // Middleware para manejar la carga de archivos
-uploadRoute.post('/', upload.single('file'), async (req, res) => {
+uploadRoute.post('/upload', upload.single('file'), async (req, res) => {
   try {
     const file = req.file;
     

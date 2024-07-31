@@ -26,7 +26,6 @@ class ProductService {
     }
     createProduct(productData) {
         return __awaiter(this, void 0, void 0, function* () {
-            // Validación de URLs
             if (productData.imageUrls) {
                 productData.imageUrls.forEach(url => {
                     if (url && !(0, validators_1.isValidUrl)(url)) {
@@ -40,42 +39,6 @@ class ProductService {
             }
             catch (error) {
                 throw new Error('Error al crear el producto.');
-            }
-        });
-    }
-    // Actualizar un producto por ID
-    updateProductById(_id, productData) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const existingProduct = yield ProductModel_1.ProductModel.findById(_id);
-                if (!existingProduct) {
-                    return null;
-                }
-                // Actualizar los campos del producto si se proporcionan
-                if (productData.name) {
-                    existingProduct.name = productData.name;
-                }
-                if (productData.description) {
-                    existingProduct.description = productData.description;
-                }
-                if (productData.price) {
-                    existingProduct.price = productData.price;
-                }
-                if (productData.imageUrls) {
-                    // Validar URLs en productData.imageUrls
-                    if (productData.imageUrls.some(url => !(0, validators_1.isValidUrl)(url))) {
-                        throw new Error('Una o más URLs de imagen no son válidas.');
-                    }
-                    existingProduct.imageUrls = productData.imageUrls;
-                }
-                if (productData.quantity) {
-                    existingProduct.quantity = productData.quantity;
-                }
-                const updatedProduct = yield existingProduct.save();
-                return updatedProduct;
-            }
-            catch (error) {
-                throw new Error('Error al actualizar el producto por ID.');
             }
         });
     }
@@ -107,19 +70,6 @@ class ProductService {
             catch (error) {
                 console.error('Error al obtener la cantidad de productos:', error);
                 throw error;
-            }
-        });
-    }
-    // Buscar productos por término de búsqueda
-    searchProducts(searchTerm) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const products = yield ProductModel_1.ProductModel.find({ name: { $regex: searchTerm, $options: 'i' } }).lean();
-                return products;
-            }
-            catch (error) {
-                console.error('Error al buscar productos:', error);
-                throw new Error('Error al buscar productos.');
             }
         });
     }
