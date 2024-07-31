@@ -1,12 +1,12 @@
-// src/routes/uploadRoute/uploadRoute.ts
-
 import express from 'express';
-import upload from '../../config/multerConfig'; // Importa la configuración de multer
+import multer from 'multer';
 import cloudinary from '../../config/cloudinaryconfig'; 
 
 const router = express.Router();
 
-// Ruta para cargar archivos
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+
 router.post('/upload', upload.single('file'), async (req, res) => {
   try {
     const file = req.file;
@@ -14,7 +14,7 @@ router.post('/upload', upload.single('file'), async (req, res) => {
       return res.status(400).send('No file uploaded.');
     }
 
-    // Crear un stream de carga en Cloudinary
+    // Subir el archivo a Cloudinary
     const uploadStream = cloudinary.uploader.upload_stream(
       { resource_type: 'auto' },
       (error, result) => {
@@ -31,13 +31,13 @@ router.post('/upload', upload.single('file'), async (req, res) => {
       }
     );
 
-    // Convertir el buffer en un stream de lectura y cargar a Cloudinary
+    // Enviar el archivo a Cloudinary
     if (file.buffer) {
-      const bufferStream = require('stream').Readable.from(file.buffer);
-      bufferStream.pipe(uploadStream);
+      uploadStream.end(file.buffer);
     } else {
       res.status(400).send('Invalid file buffer.');
     }
+
   } catch (error) {
     console.error('Error in upload route:', error);
     res.status(500).send('Error uploading image.');
