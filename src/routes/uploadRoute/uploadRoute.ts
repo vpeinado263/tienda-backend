@@ -1,29 +1,37 @@
-import express from 'express';
+// src/routes/uploadRoute/uploadRoute.ts
+import { Router } from 'express';
 import multer from 'multer';
-import cloudinary from 'cloudinary';
-import { Request, Response } from 'express';
+import cloudinary from '../../settings/cloudinaryconfig'; // Asegúrate de que esta importación sea correcta
+import path from 'path';
+import { Request, Response, NextFunction } from 'express';
 
-const router = express.Router();
-const upload = multer({ dest: 'uploads/' });
-
-cloudinary.v2.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
+// Configurar almacenamiento de Multer
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/'); // Asegúrate de que esta carpeta exista
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}${path.extname(file.originalname)}`);
+  },
 });
 
-router.post('/upload', upload.single('file'), async (req: Request, res: Response) => {
+const upload = multer({ storage });
+
+const router = Router();
+
+router.post('/upload', upload.single('file'), async (req: Request, res: Response, next: NextFunction) => {
   try {
     if (!req.file) {
-      return res.status(400).json({ message: 'No file uploaded' });
+      return res.status(400).send('No file uploaded.');
     }
 
+    // Subir a Cloudinary
     const result = await cloudinary.v2.uploader.upload(req.file.path);
-    res.status(200).json({ url: result.secure_url });
+    res.json({ url: result.secure_url });
   } catch (error) {
-    res.status(500).json({ message: 'Failed to upload image', error });
+    next(error);
   }
 });
 
-
 export default router;
+
