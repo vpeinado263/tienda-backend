@@ -1,15 +1,18 @@
-import express from 'express';
+import { Router } from 'express';
 import multer from 'multer';
 import cloudinary from '../../config/cloudinaryconfig'; 
 
-const router = express.Router();
+const uploadRoute = Router();
 
+// Configura Multer para almacenar archivos en memoria
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-router.post('/upload', upload.single('file'), async (req, res) => {
+// Middleware para manejar la carga de archivos
+uploadRoute.post('/', upload.single('file'), async (req, res) => {
   try {
     const file = req.file;
+    
     if (!file) {
       return res.status(400).send('No file uploaded.');
     }
@@ -31,7 +34,6 @@ router.post('/upload', upload.single('file'), async (req, res) => {
       }
     );
 
-    // Enviar el archivo a Cloudinary
     if (file.buffer) {
       uploadStream.end(file.buffer);
     } else {
@@ -44,4 +46,4 @@ router.post('/upload', upload.single('file'), async (req, res) => {
   }
 });
 
-export default router;
+export default uploadRoute;

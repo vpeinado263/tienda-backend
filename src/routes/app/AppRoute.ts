@@ -1,12 +1,12 @@
-import { Router } from 'express';
+import { Router } from 'express'; 
 import productRoutes from '../productRoute/ProductRoute';
-import uploadRoute from '../uploadRoute/uploadRoute'
+import uploadRoute from '../uploadRoute/uploadRoute';
 
-const appRoute = Router();
+const router = Router(); 
 
-appRoute.use('/api/products', productRoutes);
+console.log('Router instance created successfully.');
 
-appRoute.use('/api', uploadRoute)
+router.use('/products', productRoutes);
+router.use('/upload', uploadRoute);
 
-
-export default appRoute;
+export default router;

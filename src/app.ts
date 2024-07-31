@@ -2,13 +2,12 @@ import express from 'express';
 import cors from 'cors';
 import { sessionConfig } from './config/SessionConfig';
 import connectDB from './scripts/initDB';
-import productRoute from './routes/productRoute/ProductRoute';
-import uploadRoute from './routes/uploadRoute/uploadRoute';
+import appRoute from './routes/app/AppRoute';
 
 const app = express();
 
-app.use(express.json()); // Permite analizar JSON
-app.use(express.urlencoded({ extended: true })); // Permite analizar datos URL encoded
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(sessionConfig);
 connectDB();
@@ -19,7 +18,6 @@ app.use(cors({
   allowedHeaders: ['Content-Type']
 }));
 
-app.use('/api/products', productRoute);
-app.use('/api', uploadRoute); 
+app.use('/api', appRoute);
 
 export default app;
