@@ -1,11 +1,18 @@
 import express from 'express';
 import cors from 'cors';
-import { sessionConfig } from './settings/SessionConfig';
+import cloudinary from './config/cloudinaryconfig';
+import upload from './config/multerConfig';
+import { sessionConfig } from './config/SessionConfig';
 import connectDB from './scripts/initDB';
 import productRoute from './routes/productRoute/ProductRoute';
 import uploadRoute from './routes/uploadRoute/uploadRoute';
 
+
 const app = express();
+
+app.use(sessionConfig);
+
+connectDB();
 
 app.use(cors({
   origin: ['http://localhost:3000', 'https://tienda-x--swart.vercel.app'],
@@ -13,14 +20,27 @@ app.use(cors({
   allowedHeaders: ['Content-Type']
 }));
 
-app.use(sessionConfig);
+// Ruta para subir imágenes
+app.post('/api/upload', upload.single('file'), async (req, res) => {
+  try {
+    const file = req.file;
+    if (!file) {
+      return res.status(400).send('No file uploaded.');
+    }
 
-connectDB();
+    const result = await cloudinary.uploader.upload(file.path);
+    res.json({ url: result.secure_url });
+  } catch (error) {
+    console.error('Error uploading image:', error);
+    res.status(500).send('Error uploading image.');
+  }
+});
 
-app.use(express.json());
-
-app.use('/api', uploadRoute); 
 app.use('/api/products', productRoute);
 
-export default app;
+app.use('/api', uploadRoute); 
+
+export default app; // Exportación predeterminada de la aplicación
+
+
 

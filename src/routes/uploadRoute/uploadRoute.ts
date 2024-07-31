@@ -1,35 +1,48 @@
-// src/routes/uploadRoute/uploadRoute.ts
-import { Router } from 'express';
+import express from 'express';
 import multer from 'multer';
-import cloudinary from '../../settings/cloudinaryconfig'; // Asegúrate de que esta importación sea correcta
-import path from 'path';
-import { Request, Response, NextFunction } from 'express';
+import cloudinary from '../../config/cloudinaryconfig'; // Asegúrate de que la ruta sea correcta
 
-// Configurar almacenamiento de Multer
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/'); // Asegúrate de que esta carpeta exista
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}${path.extname(file.originalname)}`);
-  },
-});
+const router = express.Router();
 
+// Configuración de multer para la subida de archivos
+const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-const router = Router();
-
-router.post('/upload', upload.single('file'), async (req: Request, res: Response, next: NextFunction) => {
+router.post('/upload', upload.single('file'), async (req, res) => {
   try {
-    if (!req.file) {
+    const file = req.file;
+    if (!file) {
       return res.status(400).send('No file uploaded.');
     }
 
-    // Subir a Cloudinary
-    const result = await cloudinary.v2.uploader.upload(req.file.path);
-    res.json({ url: result.secure_url });
+    // Crear un nuevo stream para Cloudinary
+    const uploadStream = cloudinary.uploader.upload_stream(
+      { resource_type: 'auto' },
+      (error, result) => {
+        if (error) {
+          console.error('Error uploading image to Cloudinary:', error);
+          return res.status(500).send('Error uploading image.');
+        }
+
+        if (!result) {
+          console.error('Cloudinary result is undefined');
+          return res.status(500).send('Error uploading image.');
+        }
+
+        // Enviar la URL de la imagen como respuesta
+        res.json({ url: result.secure_url });
+      }
+    );
+
+    if (file.stream) {
+      file.stream.pipe(uploadStream);
+    } else {
+      res.status(400).send('Invalid file stream.');
+    }
+
   } catch (error) {
-    next(error);
+    console.error('Error in upload route:', error);
+    res.status(500).send('Error uploading image.');
   }
 });
 
