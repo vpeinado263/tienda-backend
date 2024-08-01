@@ -7,6 +7,6 @@ const AppRouter = Router();
 console.log('Router instance created successfully.');
 
 AppRouter.use('/products', productRoutes);
-AppRouter.use('/upload', uploadRoute);
+AppRouter.use('/api', uploadRoute);
 
 export default AppRouter;

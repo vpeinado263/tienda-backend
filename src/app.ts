@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import connectDB from './scripts/initDB';
 import AppRoute from './routes/app/AppRoute';
+import uploadRoute from './routes/uploadRoute/uploadRoute'; 
 
 const app = express();
 
@@ -17,5 +18,6 @@ app.use(cors({
 }));
 
 app.use('/api', AppRoute);
+app.use('/api', uploadRoute); 
 
 export default app;
