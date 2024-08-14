@@ -1,8 +1,11 @@
  import { Request, Response, NextFunction } from 'express';
  import jwt, { JwtPayload } from 'jsonwebtoken';
  import { config } from 'dotenv';
+
  config();
+
  const SECRET_KEY = process.env.SECRET_KEY || 'defaultSecretKey';
+ 
  export const authenticateUser = (req: RequestWithUserId, res: Response, next: NextFunction) => {
    const token = req.header('Authorization');
    if (!token) {

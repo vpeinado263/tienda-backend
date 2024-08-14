@@ -1,10 +1,18 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import cors from 'cors';
 import connectDB from './scripts/initDB';
 import AppRoute from './routes/app/AppRoute';
-import uploadRoute from './routes/uploadRoute/uploadRoute'; 
 
+const PORT = 8080;
 const app = express();
+
+app.get("/", (req: Request, res: Response) => {
+  res.send('<h2>Servidor Express+TypeScript ejecutandose en el puerto' + PORT);
+})
+
+app.listen(PORT, () => {
+  console.log(`Servidor en ejecución en http://localhost:${PORT}`);
+});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -18,6 +26,5 @@ app.use(cors({
 }));
 
 app.use('/api', AppRoute);
-app.use('/api', uploadRoute); 
 
 export default app;
