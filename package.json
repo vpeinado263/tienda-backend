@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Tienda Virtual",
   "private": true,
-  "main": "index.js",
   "scripts": {
     "dev": "nodemon",
     "build": "rimraf ./build && tsc",
