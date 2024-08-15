@@ -5,7 +5,7 @@ class UserService {
         return await UserModel.find();
     }
     
-     async createUser (userData: IUser): Promise<IUser> {
+    async createUser(userData: Partial<IUser>): Promise<IUser> {
         const newUser = new UserModel(userData);
         return await newUser.save();
     }
