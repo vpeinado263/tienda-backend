@@ -4,8 +4,8 @@ import { validateCreateUser, validateUserId } from "../../middlewares/validation
 
 const userRoutes = Router();
 
-userRoutes.post('/users', validateCreateUser, UserController.createUser);
-userRoutes.get('/users', UserController.getAllUsers)
-userRoutes.get('/users/:id', validateUserId, UserController.getAllUsers)
+userRoutes.post('/', validateCreateUser, UserController.createUser);
+userRoutes.get('/', UserController.getAllUsers)
+userRoutes.get('/:id', validateUserId, UserController.getAllUsers)
 
 export default userRoutes;

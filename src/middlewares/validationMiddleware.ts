@@ -14,9 +14,10 @@ export const validateId = [
 ];
 
 export const validateCreateUser = [
-  check('username').notEmpty().withMessage('contraseña obligatoria'),
-  check('password').isString().withMessage('Debe ser una cadena').isLength({ min:8 }).withMessage('Debe tener al menos 8 caracteres')
+  check('username').notEmpty().withMessage('El nombre de usuario es obligatorio'),
+  check('password').isString().withMessage('La contraseña debe ser una cadena').isLength({ min: 8 }).withMessage('La contraseña debe tener al menos 8 caracteres')
 ];
+
 
 export const validateUserId = [
   check('id').isMongoId().withMessage('El ID proporcionado no es válido'),
