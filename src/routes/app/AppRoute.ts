@@ -1,10 +1,10 @@
 import { Router } from 'express'; 
 import productRoutes from '../productRoute/ProductRoute';
+import userRoutes from '../userRoute/UserRoute';
 
 const AppRouter = Router(); 
 
-console.log('Router instance created successfully.');
-
 AppRouter.use('/products', productRoutes);
+AppRouter.use('/users', userRoutes);
 
 export default AppRouter;

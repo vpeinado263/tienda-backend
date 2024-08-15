@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import ProductService from '../../services/productService/ProductService';
 
-//controlador para obtener todos los productos
+
 const getAllProducts = async (req: Request, res: Response) => {
   try {
     const products = await ProductService.getAllProducts();
@@ -11,7 +11,7 @@ const getAllProducts = async (req: Request, res: Response) => {
     res.status(500).json({ success: false, error: 'Error al obtener los productos' });
   }
 };
-//controlador para contabilizar la cantidad de productos
+
 const getProductCount = async (req: Request, res: Response) => {
   try {
     const count = await ProductService.getProductCount();
@@ -21,7 +21,7 @@ const getProductCount = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
-//controlaor para crear un producto
+
 const createProduct = async (req: Request, res: Response) => {
   try {
     const { _id, name, description, price, imageUrls, quantity } = req.body;
@@ -32,7 +32,7 @@ const createProduct = async (req: Request, res: Response) => {
     res.status(422).json({ success: false, error: 'Error al crear el producto' });
   }
 };
-//controlador para eliminar un producto segun el ID
+
 const deleteProductById = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {

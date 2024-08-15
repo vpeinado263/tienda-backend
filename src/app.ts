@@ -10,6 +10,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send('<h2>Servidor Express+TypeScript ejecutandose en el puerto' + PORT);
 })
 
+
 app.listen(PORT, () => {
   console.log(`Servidor en ejecución en http://localhost:${PORT}`);
 });
