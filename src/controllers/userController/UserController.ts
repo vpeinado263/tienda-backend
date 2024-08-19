@@ -13,9 +13,12 @@ import UserService from "../../services/userService/UserService";
 
 const createUser = async (req: Request, res: Response) => {
     try {
-        const { username, password } = req.body;
-        const newUser = await UserService.createUser({username, password});
+        const { username, email, password } = req.body;
+
+        const newUser = await UserService.createUser({ username, email, password });
+
         res.status(201).json({ success: true, data: newUser });
+        
     } catch (error: any) {
         console.error('No se pudo crear un usuario:', error.message);
         res.status(422).json({ error: 'No se pudo crear el usuario' });

@@ -15,6 +15,7 @@ export const validateId = [
 
 export const validateCreateUser = [
   check('username').notEmpty().withMessage('El nombre de usuario es obligatorio'),
+  check('email').notEmpty().withMessage('El correo electrónico es obligatorio').isEmail().withMessage('Debe proporcionar un correo válido'),
   check('password').isString().withMessage('La contraseña debe ser una cadena').isLength({ min: 8 }).withMessage('La contraseña debe tener al menos 8 caracteres')
 ];
 
