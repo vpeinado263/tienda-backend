@@ -31,8 +31,6 @@ class ProductService {
     }
   }
 
-
-  // Eliminar un producto por ID
   async deleteProductById(productId: string): Promise<{ success: boolean; deletedProduct?: Product } | void> {
     try {
       console.log('Deleting product with ID:', productId);
@@ -50,7 +48,6 @@ class ProductService {
     }
   }
 
-  // Obtener la cantidad total de productos
   async getProductCount(): Promise<number> {
     try {
       const count = await ProductModel.countDocuments().exec();
