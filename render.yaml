@@ -13,5 +13,5 @@ services:
     sync: false
   region: oregon
   buildCommand: npm install && tsc
-  startCommand: node dist/index.js
+  startCommand: node build/app.js
 version: "1"
