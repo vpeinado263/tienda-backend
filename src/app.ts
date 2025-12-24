@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
-import connectDB from './scripts/initDB';
+// import connectDB from './scripts/initDB';
 import AppRoute from './routes/app/AppRoute';
 
 const PORT = 8080;
@@ -13,7 +13,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send('<h2>Servidor Express+TypeScript ejecutandose en el puerto' + PORT);
 });
 
-connectDB();
+// connectDB();
 
 app.use(cors({
   origin: ['http://localhost:3000', 'https://tienda-x--swart.vercel.app'],
