@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
-import ProductService from '../../services/productService/ProductService';
-
+import ProductService from '../../services/productService/ProductService0-';
 
 const getAllProducts = async (req: Request, res: Response) => {
   try {
@@ -14,18 +13,26 @@ const getAllProducts = async (req: Request, res: Response) => {
 
 const getProductCount = async (req: Request, res: Response) => {
   try {
-    const count = await ProductService.getProductCount();
-    res.status(200).json({ count });
+    const count = await ProductService.countProducts();
+    res.status(200).json({ success: true, count });
   } catch (error: any) {
     console.error('Error al obtener la cantidad de productos:', error.message);
-    res.status(500).json({ error: 'Error interno del servidor' });
+    res.status(500).json({ success: false, error: 'Error interno del servidor' });
   }
 };
 
 const createProduct = async (req: Request, res: Response) => {
   try {
-    const { _id, name, description, price, imageUrls, quantity } = req.body;
-    const newProduct = await ProductService.createProduct({ _id, name, description, price, imageUrls, quantity });
+    const { name, description, price, imageUrls, quantity } = req.body;
+
+    const newProduct = await ProductService.createProduct({
+      name,
+      description,
+      price,
+      imageUrls,
+      quantity
+    });
+
     res.status(201).json({ success: true, data: newProduct });
   } catch (error: any) {
     console.error('Error al crear el producto', error.message);
@@ -35,14 +42,15 @@ const createProduct = async (req: Request, res: Response) => {
 
 const deleteProductById = async (req: Request, res: Response) => {
   const { id } = req.params;
-  try {
-    const deletedProduct = await ProductService.deleteProductById(id);
 
-    if (deletedProduct === null) {
+  try {
+    const result = await ProductService.deleteProduct(id);
+
+    if (!result.success) {
       return res.status(404).json({ success: false, error: 'Producto no encontrado' });
     }
 
-    res.json({ success: true, data: deletedProduct });
+    res.json({ success: true, data: result.deletedProduct });
   } catch (error: any) {
     console.error('Error al eliminar el producto:', error.message);
     res.status(500).json({ success: false, error: 'Error al eliminar el producto' });
@@ -55,13 +63,3 @@ export default {
   deleteProductById,
   getProductCount
 };
-
-
-
-
-
-
-
-
-
-

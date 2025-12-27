@@ -9,7 +9,6 @@ services:
     sync: false
   - key: PORT
     sync: false
-  - key: MONGO_URL
     sync: false
   region: oregon
   buildCommand: npm install && tsc
